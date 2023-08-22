@@ -37,18 +37,31 @@ class Presence:
         return super().__new__(cls)
 
     def __post_init__(self):
+        # Validate student.
         if isinstance(self.student, str) or isinstance(self.student, Student):
             self.student = Student(self.student)
         else:
             raise ValueError("Student must be a string or a Student instance")
+        # Validate from and to hours.
         if isinstance(self.from_hour, str):
             self.from_hour = self._str_to_datetime(self.from_hour)
         if isinstance(self.to_hour, str):
             self.to_hour = self._str_to_datetime(self.to_hour)
+        # Validate weekday.
+        self.validate_weekday()
 
     @classmethod
     def _str_to_datetime(cls, time_str: str) -> datetime:
-        return datetime.strptime(time_str, '%H:%M')
+        try:
+            return datetime.strptime(time_str, '%H:%M')
+        except Exception as error:
+            raise ValueError(f"Error: {error}")
+
+    def validate_weekday(self):
+        if isinstance(self.weekday, str) and self.weekday.isdigit():
+            self.weekday = int(self.weekday)
+        if self.weekday < 1 or self.weekday > 7:
+            raise ValueError("Weekday must be between 1 and 7")
 
     def get_minutes(self):
         return (self.to_hour - self.from_hour).seconds // 60
