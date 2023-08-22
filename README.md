@@ -29,8 +29,8 @@ Fran: 0 minutes
     - [x] Create a manage.py handler to manage report generation and test running.
     - [x] Unit tests.
     - [x] Functional tests.
-    - [] Setup docker.
-    - [] Setup github actions.
+    - [] (Optional) Setup github actions.
+    - [] (Optional) Setup docker.
 - [x] Create models.
 - [x] Create main GenerateReport.
 
