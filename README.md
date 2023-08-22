@@ -1,3 +1,5 @@
+![workflow](https://github.com/oskargicast/foris/actions/workflows/python-app.yml/badge.svg)
+
 # Goal
 
 Check all the specs [here](https://gist.github.com/JessikaCastellano/6e4297fbd245d779d068fb9226b0340c).
