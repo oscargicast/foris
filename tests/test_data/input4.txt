@@ -1,0 +1,6 @@
+Student Marco
+Student David
+Student Fran
+Presence Fran 7 17:30 19:00 R1
+Presence Marco 3 10:58 12:05 R205
+Presence David 5 14:02 15:46 F505

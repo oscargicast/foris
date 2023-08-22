@@ -1,0 +1,3 @@
+Marco: 152 minutes in 3 days
+David: 104 minutes in 1 day
+Fran: 0 minutes
