@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from typing import Optional
+from typing import Optional, Union
 
 
 @dataclass(order=True)
@@ -38,15 +38,10 @@ class Presence:
 
     def __post_init__(self):
         # Validate student.
-        if isinstance(self.student, str) or isinstance(self.student, Student):
-            self.student = Student(self.student)
-        else:
-            raise ValueError("Student must be a string or a Student instance")
+        self.validate_student()
         # Validate from and to hours.
-        if isinstance(self.from_hour, str):
-            self.from_hour = self._str_to_datetime(self.from_hour)
-        if isinstance(self.to_hour, str):
-            self.to_hour = self._str_to_datetime(self.to_hour)
+        self.from_hour = self.validate_hour(self.from_hour)
+        self.to_hour = self.validate_hour(self.to_hour)
         # Validate weekday.
         self.validate_weekday()
 
@@ -57,11 +52,35 @@ class Presence:
         except Exception as error:
             raise ValueError(f"Error: {error}")
 
+    def validate_student(self):
+        if isinstance(self.student, str):
+            self.student = Student(self.student)
+        elif isinstance(self.student, Student):
+            pass
+        else:
+            raise ValueError("Student must be a string or a Student instance")
+
+    def validate_hour(self, hour: Union[str, datetime.time]) -> datetime.time:
+        if isinstance(hour, str):
+            hour = self._str_to_datetime(hour)
+        elif isinstance(hour, datetime.time):
+            pass
+        else:
+            raise ValueError(
+                "from and to hours must have a str HH:MM format "
+                "or datetime.time"
+            )
+        return hour
+
     def validate_weekday(self):
         if isinstance(self.weekday, str) and self.weekday.isdigit():
             self.weekday = int(self.weekday)
+        elif isinstance(self.weekday, int):
+            pass
+        else:
+            raise ValueError("weekday must be an integer")
         if self.weekday < 1 or self.weekday > 7:
-            raise ValueError("Weekday must be between 1 and 7")
+            raise ValueError("weekday must be between 1 and 7")
 
     def get_minutes(self):
         return (self.to_hour - self.from_hour).seconds // 60
