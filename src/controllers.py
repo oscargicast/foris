@@ -23,7 +23,7 @@ class GenerateReport:
                 output_file_path=self.output_file_path,
             )
         except FileNotFoundError:
-            raise("File not found")
+            raise FileNotFoundError("File not found")
 
     def run_command(self, entry: str) -> None:
         command, *args = entry.split(' ')

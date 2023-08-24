@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "foris"
-version = "1.1.0"
+version = "1.1.1"
 description = "Foris challenge"
 authors = ["Oscar Giraldo Castillo <oscar.gi.cast@gmail.com>"]
 readme = "README.md"
@@ -11,6 +11,7 @@ pytest = "^7.4.0"
 pytest-cov = "^4.1.0"
 pyhamcrest = "^2.0.4"
 six = "^1.16.0"
+rich = "^13.5.2"
 
 [build-system]
 requires = ["poetry-core"]
