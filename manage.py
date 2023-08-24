@@ -17,7 +17,7 @@ def get_input_file_path():
         arg = sys.argv[2]
         return arg
     else:
-        raise("A input filename must be specified")
+        raise FileNotFoundError("A input filename must be specified")
 
 
 if __name__ == "__main__":
