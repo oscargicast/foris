@@ -1,8 +1,11 @@
 import importlib
 
 from pathlib import Path
-from typing import Union
+from rich import print
+from rich.console import Console
+from rich.table import Table
 from src.models import Student, Presence, Report
+from typing import Union
 
 
 class GenerateReport:
@@ -18,6 +21,7 @@ class GenerateReport:
                 for line in input_file:
                     self.run_command(line.strip())
             sorted_reports = self.compute_reports()
+            self.print_report_table(sorted_reports)
             return self.create_output_file(
                 report_entries=sorted_reports,
                 output_file_path=self.output_file_path,
@@ -64,7 +68,25 @@ class GenerateReport:
         return str(output_path)
 
     @staticmethod
+    def print_report_table(report_entries: list[Report]) -> str:
+        table = Table(title="Student Presence Report")
+        table.add_column("Student", style="cyan", no_wrap=True)
+        table.add_column("Minutes", style="magenta")
+        table.add_column("Days", justify="right", style="green")
+        for report in report_entries:
+            table.add_row(
+                report.student.name,
+                str(report.minutes),
+                str(report.days),
+            )
+        console = Console()
+        console.print(table)
+
+    @staticmethod
     def create_output_file(report_entries: list[Report], output_file_path: str) -> str:
+        print(
+            f"[bold green]Output file:[/bold green] {output_file_path}\n"
+        )
         with open(output_file_path, "w") as output_file:
             for index, report in enumerate(report_entries):
                 report_line = report.print_report()

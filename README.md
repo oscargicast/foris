@@ -68,6 +68,8 @@ make report `input_filepath`
 make report data/input1.txt
 ```
 
+![Report output](https://raw.githubusercontent.com/oskargicast/foris/master/assets/output.png)
+
 To run all the tests.
 ```bash
 make test

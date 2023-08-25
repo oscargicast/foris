@@ -30,7 +30,7 @@ def generate_report_command(filename):
         "\n[bold red]:beer::beer: "
         "Generating report! "
         ":beer::beer:[/bold red]\n"
-        f"[bold green]Input file:[/bold green] {file_path}\n"
+        f"[bold green]Input file:[/bold green] {file_path}"
     )
     GenerateReport(file_path).generate()
 
