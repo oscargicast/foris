@@ -1,11 +1,9 @@
-import importlib
-
 from pathlib import Path
 from rich import print
 from rich.console import Console
 from rich.table import Table
-from src.models import Student, Presence
-from enum import Enum, auto
+from src.models import Student, Presence, ShortPresenceError
+from enum import Enum
 
 
 class Command(Enum):
@@ -19,7 +17,7 @@ class CommandError(Exception):
 
 class GenerateReport:
 
-    def __init__(self, input_file_path) -> None:
+    def __init__(self, input_file_path: str) -> None:
         self.input_file_path = input_file_path
         self.output_file_path = self._get_output_file_path()
         self.students: dict[str, Student] = {}
@@ -44,7 +42,7 @@ class GenerateReport:
     def get_student(self, name: str) -> Student:
         if name not in self.students:
             self.students[name] = Student(name)
-        return self.students.get(name)
+        return self.students[name]
 
     def run_command(self, entry: str) -> None:
         command, name, *args = entry.split(' ')
@@ -52,7 +50,10 @@ class GenerateReport:
             student = self.get_student(name)
         elif command == Command.PRESENCE.value:
             student = self.get_student(name)
-            presence = Presence(*args)
+            try:
+                presence = Presence(*args)
+            except ShortPresenceError:
+                return
             student.register_presence(presence)
         else:
             raise CommandError("Unknown command")
@@ -63,7 +64,7 @@ class GenerateReport:
         return str(output_path)
 
     @classmethod
-    def print_report_table(cls, students: list[Student]) -> str:
+    def print_report_table(cls, students: list[Student]):
         table = Table(title="Student Presence Report")
         table.add_column("Student", style="cyan", no_wrap=True)
         table.add_column("Minutes", style="magenta")
