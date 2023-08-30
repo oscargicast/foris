@@ -15,7 +15,7 @@ def setup_python_path():
     src_dir = os.path.join(PROJECT_ROOT, "src")
     sys.path.insert(0, src_dir)
 
-def test_command(args):
+def test_command(args: list["str"]):
     print(
         "\n[bold green]:microbe::microbe: "
         "Running tests... "
@@ -24,7 +24,7 @@ def test_command(args):
     setup_python_path()
     pytest.main(args)
 
-def generate_report_command(filename):
+def generate_report_command(filename: argparse.Namespace):
     file_path = filename.filename
     print(
         "\n[bold red]:beer::beer: "
