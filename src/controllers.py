@@ -79,7 +79,8 @@ class GenerateReport:
         console.print(table)
 
     @classmethod
-    def create_output_file(cls, output_file_path: str, students: list[Student]) -> str:
+    def create_output_file(cls, output_file_path: str,
+                           students: list[Student]) -> str:
         print(
             f"[bold green]Output file:[/bold green] {output_file_path}\n"
         )

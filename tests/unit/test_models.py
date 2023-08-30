@@ -10,6 +10,7 @@ class TestStudent:
         assert_that(student_1, equal_to(student_2))
         assert_that(student_2, not equal_to(student_3))
 
+
 class TestPresence:
     def test_model(self):
         # Student 1.

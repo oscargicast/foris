@@ -6,10 +6,18 @@ from datetime import datetime, timedelta
 @dataclass()
 class Student:
     name: str
-    presences: list[Presence] = field(default_factory=list, init=False, repr=False)
+    presences: list[Presence] = field(
+        default_factory=list,
+        init=False,
+        repr=False,
+    )
     minutes: int = field(default=0, init=False)
     days: int = field(default=0, init=False)
-    weekdays: set[int | str] = field(default_factory=set, init=False, repr=False)
+    weekdays: set[int | str] = field(
+        default_factory=set,
+        init=False,
+        repr=False,
+    )
 
     def __lt__(self, other: Student) -> bool:
         return self.minutes < other.minutes
