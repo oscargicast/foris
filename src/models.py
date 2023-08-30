@@ -18,7 +18,7 @@ class Student:
         if not presence:
             return
         self.presences.append(presence)
-        self.minutes += presence.get_minutes()
+        self.minutes += presence.minutes_elapsed
         self.weekdays.add(presence.weekday)
         self.days = len(self.weekdays)
 
@@ -84,5 +84,6 @@ class Presence:
         if self.weekday < 1 or self.weekday > 7:
             raise ValueError("weekday must be between 1 and 7")
 
-    def get_minutes(self) -> int:
+    @property
+    def minutes_elapsed(self) -> int:
         return (self.to_hour - self.from_hour).seconds // 60
